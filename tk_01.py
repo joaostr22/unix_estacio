@@ -236,7 +236,7 @@ entrada_email_prof = tk.Entry(fr_cadastro02, font=("Arial", 12))
 entrada_email_prof.place(relx=0.7, rely=0.85, anchor=tk.CENTER)
 
 #
-botao_enviar02 = tk.Button(aba_prof, text="Enviar", command=registrar_aluno, font=("Arial", 14), fg="white", bg="#a94040")
+botao_enviar02 = tk.Button(aba_prof, text="Enviar", command=registrar_prof, font=("Arial", 14), fg="white", bg="#a94040")
 botao_enviar02.place(relx=0.6, rely=0.85, anchor=tk.CENTER)
 
 botao_limpar02 = tk.Button(aba_prof, text="Limpar", command=limpar_campos, font=("Arial", 14), fg="white", bg="#a94040")
@@ -249,3 +249,4 @@ botao_limpar02.place(relx=0.4, rely=0.85, anchor=tk.CENTER)
 
 
 janela.mainloop()
+
