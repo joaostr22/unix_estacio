@@ -34,6 +34,15 @@ CREATE TABLE IF NOT EXISTS prof (
 )
 """)
 
+cursor.execute("""
+CREATE TABLE IF NOT EXISTS disciplina (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    nome TEXT,
+    qtd INTEGER,
+    prof TEXT
+)
+""")
+
 conn.commit()
 
 
@@ -85,6 +94,23 @@ def registrar_prof():
 
     limpar_campos()
     messagebox.showinfo("Sucesso", "Professor registrado com sucesso!")
+    
+def registrar_disciplina():
+    nome = entrada_nome_disciplina.get()
+    qtd = entrada_qtd_disciplina.get()
+    prof = entrada_prof_disciplina.get()
+    
+
+    sql = """
+    INSERT INTO disciplina (nome, qtd, prof)
+    VALUES (?, ?, ?)
+    """
+    valores = (nome, qtd, prof)
+    cursor.execute(sql, valores)
+    conn.commit()
+
+    limpar_campos()
+    messagebox.showinfo("Sucesso", "Disciplina registrada com sucesso!")
 
 def limpar_campos():
     entrada_nome_aluno.delete(0, tk.END)
@@ -99,6 +125,9 @@ def limpar_campos():
     entrada_endereco_prof.delete(0, tk.END)
     entrada_telefone_prof.delete(0, tk.END)
     entrada_email_prof.delete(0, tk.END)
+    entrada_nome_disciplina.delete(0, tk.END)
+    entrada_qtd_disciplina.delete(0, tk.END)
+    entrada_prof_disciplina.delete(0, tk.END)
     
 
 # Estilo para os frames
@@ -116,13 +145,19 @@ aba_aluno = ttk.Frame(abas)
 abas.add(aba_aluno, text='Cadastrar Aluno')
 aba_prof = ttk.Frame(abas)
 abas.add(aba_prof, text='Cadastrar Professor')
+aba_disciplina = ttk.Frame(abas)
+abas.add(aba_disciplina, text='Cadastrar Disciplina')
 
 
 # Cabeçalho universidade
 cabecalho01 = tk.Label(aba_aluno, text="Universidade X", font=("Cambria", 35), image=logo, compound='left')
 cabecalho01.place(relx=0.5, rely=0.1, anchor=tk.CENTER)
+
 cabecalho02 = tk.Label(aba_prof, text="Universidade X", font=("Cambria", 35), image=logo, compound='left')
 cabecalho02.place(relx=0.5, rely=0.1, anchor=tk.CENTER)
+
+cabecalho03 = tk.Label(aba_disciplina, text="Universidade X", font=("Cambria", 35), image=logo, compound='left')
+cabecalho03.place(relx=0.5, rely=0.1, anchor=tk.CENTER)
 
 
 # Frames
@@ -130,6 +165,8 @@ fr_cadastro01 = Frame(aba_aluno, borderwidth=1, relief="solid", bg="#E7DFDF")
 fr_cadastro01.place(x=160, y=210, width=500, height=300)
 fr_cadastro02 = Frame(aba_prof, borderwidth=1, relief="solid", bg="#E7DFDF")
 fr_cadastro02.place(x=160, y=210, width=500, height=300)
+fr_cadastro03 = Frame(aba_disciplina, borderwidth=1, relief="solid", bg="#E7DFDF")
+fr_cadastro03.place(x=160, y=210, width=500, height=300)
 
 
 # Formulário alunos
@@ -243,10 +280,42 @@ botao_limpar02 = tk.Button(aba_prof, text="Limpar", command=limpar_campos, font=
 botao_limpar02.place(relx=0.4, rely=0.85, anchor=tk.CENTER)
 
 
+#--------------------------------------------
 
+
+# Formulário disciplinas
+label_explicativo03 = tk.Label(aba_disciplina, text="Cadastro de Disciplinas:", font=("Cambria", 20, "bold"), fg="black", bg="#F0F0F0")
+label_explicativo03.place(relx=0.5, rely=0.24, anchor=tk.CENTER)
+
+#
+label_nome_disciplina = tk.Label(fr_cadastro03, text="Nome:", font=("Arial", 12), fg="black", bg="#E7DFDF")
+label_nome_disciplina.place(relx=0.35, rely=0.1, anchor=tk.E) #antes 0.3
+
+entrada_nome_disciplina = tk.Entry(fr_cadastro03, font=("Arial", 12))
+entrada_nome_disciplina.place(relx=0.7, rely=0.1, anchor=tk.CENTER)
+
+#
+label_qtd_disciplina = tk.Label(fr_cadastro03, text="Quantidade de alunos:", font=("Arial", 12), fg="black", bg="#E7DFDF")
+label_qtd_disciplina.place(relx=0.35, rely=0.25, anchor=tk.E)
+
+entrada_qtd_disciplina = tk.Entry(fr_cadastro03, font=("Arial", 12))
+entrada_qtd_disciplina.place(relx=0.7, rely=0.25, anchor=tk.CENTER)
+
+#
+label_prof_disciplina = tk.Label(fr_cadastro03, text="Professor responsável:", font=("Arial", 12), fg="black", bg="#E7DFDF")
+label_prof_disciplina.place(relx=0.35, rely=0.4, anchor=tk.E)
+
+entrada_prof_disciplina = tk.Entry(fr_cadastro03, font=("Arial", 12))
+entrada_prof_disciplina.place(relx=0.7, rely=0.4, anchor=tk.CENTER)
+
+#
+botao_enviar03 = tk.Button(aba_disciplina, text="Enviar", command=registrar_disciplina, font=("Arial", 14), fg="white", bg="#a94040")
+botao_enviar03.place(relx=0.6, rely=0.85, anchor=tk.CENTER)
+
+botao_limpar03 = tk.Button(aba_disciplina, text="Limpar", command=limpar_campos, font=("Arial", 14), fg="white", bg="#a94040")
+botao_limpar03.place(relx=0.4, rely=0.85, anchor=tk.CENTER)
 
 
 
 
 janela.mainloop()
-
